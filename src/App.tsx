@@ -6,12 +6,12 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={< IndexPage />}></Route>
-          <Route path="/naver-login" element={< NaverLoginPage />}></Route>
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/naver-login" element={< NaverLoginPage />}></Route>
+            <Route path="/" element={< IndexPage />}></Route>
+          </Routes>
+        </BrowserRouter>
     </div>
   );
 }
