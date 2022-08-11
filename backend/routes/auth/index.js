@@ -1,6 +1,8 @@
 import express from 'express';
-import checkValidToken from './checkValidToken.js';
 import cors from 'cors';
+
+import checkValidToken from './checkValidToken.js';
+import deleteNaverAuth from './deleteNaverAuth.js';
 
 const router = express.Router();
 const corsOptions = {
@@ -11,5 +13,6 @@ router.get('/', (req, res) => {
     res.send('AUTH ROUTES!')
 })
 router.get('/naver/check-valid-token', cors(corsOptions), checkValidToken);
+router.post('/naver/delete-auth', cors(corsOptions), deleteNaverAuth);
 
 export default router;

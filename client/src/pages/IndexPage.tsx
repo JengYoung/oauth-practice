@@ -13,10 +13,10 @@ const IndexPage = () => {
   const { accessToken, setAccessToken, userInfo, setUserInfo } = useContext(UserContext);
 
   const onLogout = async () => {
-    const res = await axios.post('https://nid.naver.com/oauth2.0/token', {
+    const res = await axios.post('auth/naver/delete-auth', {
       client_id: process.env.REACT_APP_NAVER_CLIENT_ID,
       client_secret: process.env.REACT_APP_NAVER_SECRET,
-      access_token: accessToken,
+      accessToken,
       grant_type: 'delete'
     }, {
       headers: {
