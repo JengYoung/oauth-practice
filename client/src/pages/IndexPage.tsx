@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../contexts/UserContext';
 
 declare global {
@@ -62,14 +62,26 @@ const IndexPage = () => {
     getFn()
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [])
+
+
+  const [kakaoLogin, setKakaoLogin] = useState<any>(null);
   
   useEffect(() => {
     if (window && !window.Kakao.isInitialized()) {
       const Kakao = window.Kakao;
       window.Kakao.init('abd52d4f71bf72ffebcf85c674281bb4')
+      setKakaoLogin(() => Kakao);
       console.log(Kakao.isInitialized())
     }
   }, [])
+
+  const onKakaoLogin = () => {
+    kakaoLogin?.Auth.authorize({
+      redirectUri: 'http://localhost:3000/kakao-login',
+      state: 'culetter'
+    })
+  }
+
   return (
     <>
       <div id="naverIdLogin"></div>
@@ -78,13 +90,13 @@ const IndexPage = () => {
       <button onClick={onLogout}>로그아웃</button>
       
       {/* eslint-disable-next-line */}
-      <a id="custom-login-btn">
+      <button id="custom-login-btn" onClick={onKakaoLogin}>
         <img
           src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
           width="222"
           alt="카카오 로그인 버튼"
         />
-      </a>
+      </button>
     </>
   )
 }
