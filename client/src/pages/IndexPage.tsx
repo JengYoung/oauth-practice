@@ -62,13 +62,29 @@ const IndexPage = () => {
     getFn()
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [])
-
+  
+  useEffect(() => {
+    if (window && !window.Kakao.isInitialized()) {
+      const Kakao = window.Kakao;
+      window.Kakao.init('abd52d4f71bf72ffebcf85c674281bb4')
+      console.log(Kakao.isInitialized())
+    }
+  }, [])
   return (
     <>
       <div id="naverIdLogin"></div>
       <div>{JSON.stringify(userInfo)}</div>
       <div>{JSON.stringify(accessToken)}</div>
       <button onClick={onLogout}>로그아웃</button>
+      
+      {/* eslint-disable-next-line */}
+      <a id="custom-login-btn">
+        <img
+          src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+          width="222"
+          alt="카카오 로그인 버튼"
+        />
+      </a>
     </>
   )
 }
