@@ -11,9 +11,9 @@ const getAuthKaKaoToken = async (req, res) => {
     const data = {
       grant_type: "authorization_code",
       code,
-      client_id: "2bb5c7a6e6674d807b20622e015c0b89",
-      redirect_uri: "http://localhost:3000/kakao-login",
-      client_secret: "KNwdz0CJzXgTvkPCsDnLqjPDPYEawpke",
+      client_id: process.env.KAKAO_REST_API_KEY,
+      redirect_uri: process.env.KAKAO_REDIRECT_URI,
+      client_secret: process.env.KAKAO_CLIENT_SECRET,
     };
 
     const result = await axios.post(

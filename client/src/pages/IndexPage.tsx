@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import kakaoUserLogout from "../api/auth/kakao/kakaoUserLogout";
 import { UserContext } from "../contexts/UserContext";
 
 declare global {
@@ -86,6 +87,16 @@ const IndexPage = () => {
     });
   };
 
+  const onKakaoLogout = async () => {
+    const res = await kakaoUserLogout();
+
+    if (res.status === 200) {
+      window.localStorage.removeItem("access_token");
+      setUserInfo(() => ({}));
+      setAccessToken(() => "");
+    }
+  };
+
   return (
     <>
       <div id="naverIdLogin"></div>
@@ -102,6 +113,9 @@ const IndexPage = () => {
             alt="카카오 로그인 버튼"
           />
         </button>
+      )}
+      {accessToken && (
+        <button onClick={onKakaoLogout}>카카오 계정 로그아웃</button>
       )}
     </>
   );

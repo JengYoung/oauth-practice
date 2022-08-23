@@ -21,6 +21,7 @@ const getKakaoUser = async (req, res) => {
     });
     return res.status(200).json(result.data);
   } catch (e) {
+    console.log(e);
     return res.status(400).send(e);
   }
 };
