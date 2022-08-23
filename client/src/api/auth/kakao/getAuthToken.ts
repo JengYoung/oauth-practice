@@ -7,7 +7,7 @@ const getAuthToken = async (code) => {
     },
   });
 
-  return res;
+  return res.data;
 };
 
 export default getAuthToken;

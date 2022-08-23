@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import getAuthToken from "../api/auth/kakao/getAuthToken";
+import getKakaoUserInfo from "../api/auth/kakao/getKakaoUserInfo";
 
 const KakaoLoginPage = () => {
   const [params] = useSearchParams();
@@ -15,7 +16,11 @@ const KakaoLoginPage = () => {
 
       // window.localStorage.setItem("ACCESS_TOKEN", JSON.stringify(token));
       isRequested.current = true;
+
+      const userInfo = await getKakaoUserInfo(res.access_token);
+      console.log(userInfo);
     }
+
     getToken();
 
     return () => {
