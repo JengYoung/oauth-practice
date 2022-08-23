@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 
 export interface User {
   [info: string]: any;
@@ -12,29 +12,38 @@ export interface UserContextType extends UserInfo {
 }
 
 const initialState = {
-  accessToken: '',
-  userInfo: {}
-}
-export const UserContext = React.createContext<UserContextType>(initialState)
+  accessToken: "",
+  userInfo: {},
+};
+export const UserContext = React.createContext<UserContextType>(initialState);
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const UserProvider = ({ children }: Props) => {
   const [userInfo, setUserInfo] = useState(() => ({}));
-  const [accessToken, setAccessToken] = useState(() => '');
+  const [accessToken, setAccessToken] = useState(() => "");
 
-  const value = useMemo(() => ({
-    userInfo,
-    accessToken,
-    setUserInfo,
-    setAccessToken
-  }), [userInfo, accessToken, setUserInfo, setAccessToken])
+  useEffect(() => {
+    const token = window.localStorage.getItem("access_token");
 
-  return (
-    <UserContext.Provider value={value}>{children}</UserContext.Provider>
-  )
-}
+    if (token) {
+      setAccessToken(() => JSON.parse(token));
+    }
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      userInfo,
+      accessToken,
+      setUserInfo,
+      setAccessToken,
+    }),
+    [userInfo, accessToken, setUserInfo, setAccessToken]
+  );
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+};
 
 export default UserProvider;

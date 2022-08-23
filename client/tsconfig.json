@@ -22,7 +22,6 @@
     "noImplicitAny": false
   },
   "include": [
-    "src",
-    "./window.d.ts"
+    "src"
   ]
 }
