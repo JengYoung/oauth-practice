@@ -1,7 +1,6 @@
-
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../contexts/UserContext';
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 declare global {
   interface Window {
@@ -10,23 +9,29 @@ declare global {
 }
 
 const IndexPage = () => {
-  const { accessToken, setAccessToken, userInfo, setUserInfo } = useContext(UserContext);
+  const { accessToken, setAccessToken, userInfo, setUserInfo } =
+    useContext(UserContext);
 
   const onLogout = async () => {
-    const res = await axios.post('auth/naver/delete-auth', {
-      client_id: process.env.REACT_APP_NAVER_CLIENT_ID,
-      client_secret: process.env.REACT_APP_NAVER_SECRET,
-      accessToken,
-      grant_type: 'delete'
-    }, {
-      headers: {
-        'X-Naver-Client-Id': process.env.REACT_APP_NAVER_CLIENT_ID as string, 
-        'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_SECRET as string,
+    const res = await axios.post(
+      "auth/naver/delete-auth",
+      {
+        client_id: process.env.REACT_APP_NAVER_CLIENT_ID,
+        client_secret: process.env.REACT_APP_NAVER_SECRET,
+        accessToken,
+        grant_type: "delete",
+      },
+      {
+        headers: {
+          "X-Naver-Client-Id": process.env.REACT_APP_NAVER_CLIENT_ID as string,
+          "X-Naver-Client-Secret": process.env.REACT_APP_NAVER_SECRET as string,
+        },
       }
-    })
-    console.log(res)
-  }
-  // const url = window.opener.document.location.href; 
+    );
+    console.log(res);
+  };
+
+  // const url = window.opener.document.location.href;
   const initializeNaverLogin = () => {
     const callbackUrl = `http://localhost:3000/naver-login`;
 
@@ -35,52 +40,50 @@ const IndexPage = () => {
       callbackUrl,
       isPopup: false,
       callbackHandle: true,
-      loginButton: { color: 'white', type: 2, height: '45'}
+      loginButton: { color: "white", type: 2, height: "45" },
     });
 
     naverLogin.init();
-  }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    setAccessToken(() => token)
+    const token = localStorage.getItem("access_token");
+    setAccessToken(() => token);
 
     async function getFn() {
-      const res = await axios.get('/auth/naver/check-valid-token', {
+      const res = await axios.get("/auth/naver/check-valid-token", {
         headers: {
           Authorization: `Bearer ${token as string}`,
-        }
-      })
+        },
+      });
 
       setUserInfo((state) => ({
         ...state,
         ...res.data.response,
-      }))
+      }));
     }
 
-    initializeNaverLogin()
-    getFn()
+    initializeNaverLogin();
+    getFn();
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [])
-
+  }, []);
 
   const [kakaoLogin, setKakaoLogin] = useState<any>(null);
-  
+
   useEffect(() => {
     if (window && !window.Kakao.isInitialized()) {
       const Kakao = window.Kakao;
-      window.Kakao.init('abd52d4f71bf72ffebcf85c674281bb4')
       setKakaoLogin(() => Kakao);
-      console.log(Kakao.isInitialized())
+      window.Kakao.init("abd52d4f71bf72ffebcf85c674281bb4");
     }
-  }, [])
+  }, []);
 
   const onKakaoLogin = () => {
     kakaoLogin?.Auth.authorize({
-      redirectUri: 'http://localhost:3000/kakao-login',
-      state: 'culetter'
-    })
-  }
+      redirectUri: "http://localhost:3000/kakao-login",
+      state: "culetter",
+    });
+  };
 
   return (
     <>
@@ -88,7 +91,7 @@ const IndexPage = () => {
       <div>{JSON.stringify(userInfo)}</div>
       <div>{JSON.stringify(accessToken)}</div>
       <button onClick={onLogout}>로그아웃</button>
-      
+
       {/* eslint-disable-next-line */}
       <button id="custom-login-btn" onClick={onKakaoLogin}>
         <img
@@ -98,7 +101,7 @@ const IndexPage = () => {
         />
       </button>
     </>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;

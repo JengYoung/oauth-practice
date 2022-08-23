@@ -1,7 +1,7 @@
 import request from "../..";
 
 const getAuthToken = async (code) => {
-  const res = await request.get(`/auth/kakao-login`, {
+  const res = await request.get(`/auth/kakao/login`, {
     params: {
       code,
     },
