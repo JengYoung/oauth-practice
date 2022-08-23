@@ -26,10 +26,8 @@ const getAuthKaKaoToken = async (req, res) => {
       }
     );
 
-    console.log(result);
     return res.send(result.data);
   } catch (e) {
-    console.log(e.data);
     return res.json(e.data);
   }
 };

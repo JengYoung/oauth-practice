@@ -28,7 +28,8 @@ const IndexPage = () => {
         },
       }
     );
-    console.log(res);
+
+    console.log("Logout: ", res);
   };
 
   // const url = window.opener.document.location.href;
@@ -89,17 +90,19 @@ const IndexPage = () => {
     <>
       <div id="naverIdLogin"></div>
       <div>{JSON.stringify(userInfo)}</div>
-      <div>{JSON.stringify(accessToken)}</div>
+      <div>{accessToken}</div>
       <button onClick={onLogout}>로그아웃</button>
 
       {/* eslint-disable-next-line */}
-      <button id="custom-login-btn" onClick={onKakaoLogin}>
-        <img
-          src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-          width="222"
-          alt="카카오 로그인 버튼"
-        />
-      </button>
+      {!accessToken && (
+        <button id="custom-login-btn" onClick={onKakaoLogin}>
+          <img
+            src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+            width="222"
+            alt="카카오 로그인 버튼"
+          />
+        </button>
+      )}
     </>
   );
 };
